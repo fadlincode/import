@@ -1,0 +1,14 @@
+{
+    "table" : "contents",
+    "column" : [
+        "name",
+        "address",
+        "phone_number",
+        "link",
+        "coordinate",
+        "description",
+        "rating",
+        "category_id",
+        "dtw_category_id"
+    ]
+}
