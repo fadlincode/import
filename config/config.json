@@ -1,0 +1,14 @@
+{
+    "connection": {
+        "host": "localhost",
+        "user": "root",
+        "pass": "",
+        "database":"example"
+    },
+    "uuid" : false,
+    "table" : "table",
+    "column" : [
+        "name",
+        "age"
+    ]
+}

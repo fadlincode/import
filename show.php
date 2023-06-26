@@ -1,7 +1,7 @@
 <?php
     session_start();
-    include('function.php');
-    $import = new import();
+    include('import.php');
+    $import = new Import();
     $import->setTempData($_FILES['csv']);
 ?>
 
@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Import Data</title>
+        <title>Import Data CSV</title>
 
         <link rel="stylesheet" href="assets/css/bootstrap.css">
     </head>
@@ -22,12 +22,14 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">View Data | <a class="btn btn-primary" href="import.php">Start Import</a> </h5>
+                            <h5 class="card-title">View Data | <a class="btn btn-danger" href="./">Back</a> <a class="btn btn-success" href="process.php">Start Import</a> </h5>
                             <hr>
                             
-                            <table class="table table-responsive">
-                                <?php echo $import->showData($_FILES['csv']); ?>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <?php echo $import->showData($_FILES['csv']); ?>
+                                </table>
+                            </div>
                             
                         </div>
                     </div>
