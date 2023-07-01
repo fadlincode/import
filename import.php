@@ -23,6 +23,11 @@ Class Import {
         return $this->loadConfig('uuid');
     }
 
+    function getSeparator()
+    {
+        return $this->loadConfig('separator');
+    }
+
     function getConnection()
     {
         return $this->loadConfig('connection');
@@ -38,10 +43,21 @@ Class Import {
         return $this->loadConfig('table');
     }
 
+    function separatorType($word)
+    {
+        $acceptedSeparator = [',', ';'];
+        foreach ($acceptedSeparator as $as) {
+            if (strpos($word, $as) !== false) {
+                return $as;
+            }
+        }
+        return 'undefined';
+    }
+
     function setHeader()
     {
-        echo "<tr>";
-            echo "<td>No</td>";
+        echo "<tr class='table-dark'>";
+            echo "<td style='width:5%'>No</td>";
             
             $column = $this->getColumn();
             for($i=0; $i < count($column); $i++){
@@ -59,20 +75,36 @@ Class Import {
             $file   = $post['tmp_name'];
             $handle = fopen($file, "r");
             
-            $no = 1;
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                echo "<tr>";
-                    echo "<td>".$no."</td>";
-                    for($i = 0; $i < count($this->getColumn()); $i++)
-                    {
-                        echo "<td>".$data[$i]."</td>";
-                    }
-                echo "</tr>";
+            $firstLine       = file($file)[0];
+            $actualSeparator = $this->separatorType($firstLine);
 
-                $no++;
+            if ($actualSeparator !== $this->getSeparator()) {
+                echo "<p class = 'alert alert-danger'>";
+                echo "<b>Expected Separator: </b> '" . $this->getSeparator() ."' <br>";
+                echo "<b>Actual Separator: </b> '" . $actualSeparator ."' <br><br>";
+                echo "The CSV file separator does not match the expected separator. Please change on <b>config/config.json</b>, set <b>separator</b> with <b>Actual Separator</b> value <br>";
+                echo "</p>";
+            } else {
+
+                echo "<p class = 'alert alert-info'> Total <b>".count(file($file))."</b> data ready to import</p>";
+
+                $no = 1;
+                while (($data = fgetcsv($handle, 1000, $this->getSeparator())) !== false) {
+                    echo "<tr>";
+                        echo "<td>".$no."</td>";
+                        for($i = 0; $i < count($this->getColumn()); $i++)
+                        {
+                            echo "<td>".$data[$i]."</td>";
+                        }
+                    echo "</tr>";
+
+                    $no++;
+                }
+
+                fclose($handle);
             }
 
-            fclose($handle);
+            
         }
     }
 
@@ -84,11 +116,18 @@ Class Import {
 
             $all = [];
 
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                array_push($all, $data);
+            $firstLine       = file($file)[0];
+            $actualSeparator = $this->separatorType($firstLine);
+
+            if ($actualSeparator !== $this->getSeparator()) {
+                $_SESSION['data'] = [];
+            } else {
+                while (($data = fgetcsv($handle, 1000, $this->getSeparator())) !== false) {
+                    array_push($all, $data);
+                }
+                $_SESSION['data'] = $all;
             }
 
-            $_SESSION['data'] = $all;
         } else {
             $_SESSION['data'] = [];
         }

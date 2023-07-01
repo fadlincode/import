@@ -19,9 +19,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <h5 class="card-header">Import CSV</h5>
                         <div class="card-body">
-                            <h5 class="card-title">Import CSV</h5>
-                            <p class="card-text">Choose your csv file, and upload here.</p>
+                            <p class="card-text alert alert-info">Choose your csv file, and upload here.</p>
+                            <hr>
 
                             <form action="show.php" method="post" enctype="multipart/form-data">
                                 Choose File CSV:

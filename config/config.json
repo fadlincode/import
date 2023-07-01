@@ -5,6 +5,7 @@
         "pass": "",
         "database":"example"
     },
+    "separator" : ";",
     "uuid" : false,
     "table" : "table",
     "column" : [

@@ -24,6 +24,7 @@ then, setup your config on config/config.json : for set uuid, host, user, passwo
         "database": "" # set target database name
     },
     "uuid": false, # set true for using auto generate uuid, false for not (Auto Increment)
+    "separator" : ";", # set separator , it's ',' or ';'
     "table": "table_name", # set target table
     "column": [ # set all target column here
         "column1",
