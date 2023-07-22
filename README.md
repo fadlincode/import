@@ -35,5 +35,5 @@ then, setup your config on config/config.json : for set uuid, host, user, passwo
   }
 ```
 
-## requirement
+## requirements
 - install composer : https://getcomposer.org/download/
